@@ -51,6 +51,7 @@ const Button= styled.button`
     background-color: teal;
     color: white;
     cursor: pointer;
+    margin-bottom: 10px;
 `
 const Login = () => {
   return (
@@ -61,7 +62,7 @@ const Login = () => {
             <Input placeholder="username"></Input>
             <Input placeholder="password"></Input>
             <Button>LOGIN</Button>
-            <Link>DO NOT REMEMBER YOUR PASSWORD?</Link>
+            <Link>FORGOT PASSWORD?</Link>
             <Link>CREATE A NEW ACCOUNT</Link>
         </Form>
       </Wrapper>
