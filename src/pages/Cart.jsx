@@ -22,6 +22,7 @@ const Top = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 20px;
+  ${mobile({padding: "10px" })}
 `;
 
 const TopButton = styled.button`
@@ -32,6 +33,7 @@ const TopButton = styled.button`
   background-color: ${(props) =>
     props.type === "filled" ? "black" : "transparent"};
   color: ${(props) => props.type === "filled" && "white"};
+  ${mobile({ marginRight: "10px" })}
 `;
 
 const TopTexts = styled.div`
@@ -125,6 +127,7 @@ const Summary = styled.div`
   border: 0.5px solid lightgray;
   border-radius: 10px;
   padding: 20px;
+  ${mobile({ width: "100%" })}
 `;
 
 const SummaryTitle = styled.h1`
@@ -137,6 +140,7 @@ const SummaryItem = styled.div`
   justify-content: space-between;
   font-weight: ${(props) => props.type === "total" && "500"};
   font-size: ${(props) => props.type === "total" && "24px"};
+  
 `;
 
 const SummaryItemText = styled.span``;
@@ -150,6 +154,7 @@ const Button = styled.button`
   color: white;
   font-weight: 600;
 `;
+
 
 
 

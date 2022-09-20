@@ -15,8 +15,10 @@ const Desc = styled.div`
 font-size: 24px;
 font-weight: 300;
 margin-bottom: 20px; 
-${mobile({ fontSize: "15px"})}
+${mobile({ textAlign: "center", marginLeft: "5px", marginRight: "5px"})}
 `;
+
+
 const Title = styled.h1`
     font-size: 70px;
     margin-bottom: 20px;
