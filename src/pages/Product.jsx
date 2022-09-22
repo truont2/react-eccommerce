@@ -6,9 +6,12 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import { mobile } from "../responsive";
-import { useLocation} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { addProduct } from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
+
 const Container = styled.div``;
 const Wrapper = styled.div`
   padding: 50px;
@@ -109,33 +112,43 @@ const Button = styled.button`
 const Product = () => {
   const location = useLocation();
   const productId = location.pathname.split("/")[2];
-    const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState({});
-
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+  const dispatch = useDispatch();
 
   const changeQuantity = (value) => {
-    if(value === "decrease" && quantity > 1) {
-        setQuantity(quantity - 1);
-    } 
-    
-    if(value === "increase"){
-        setQuantity(quantity + 1);
+    if (value === "decrease" && quantity > 1) {
+      setQuantity(quantity - 1);
     }
-  }
+
+    if (value === "increase") {
+      setQuantity(quantity + 1);
+    }
+  };
 
   useEffect(() => {
-    const getProduct = async() => {
-        try {
-            const res = await axios.get(`http://localhost:3001/api/products/find/${productId}`)
-            console.log(res.data, "response")
-            setProduct(res.data);
-        } catch(err) {
-            console.log(err);
-        }
-    }
+    const getProduct = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:3001/api/products/find/${productId}`
+        );
+        setProduct(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
     getProduct();
-  }, [productId])
-  
+  }, [productId]);
+
+  const handleClick = () => {
+    // update cart
+    // need to dispatch the action first
+    console.log("fuck this");
+    dispatch(addProduct({ ...product, quantity, color, size}));
+  };
+
   return (
     <Container>
       <Navbar />
@@ -146,20 +159,18 @@ const Product = () => {
         </ImgContainer>
         <InfoContainer>
           <Title>{product.title}</Title>
-          <Desc>
-          {product.desc}
-          </Desc>
+          <Desc>{product.desc}</Desc>
           <Price>{"$ " + product.price}</Price>
           <FilterContainer>
             <Filter>
-                <FilterTitle>Color</FilterTitle>
+              <FilterTitle>Color</FilterTitle>
               {product.color?.map((c) => (
-                <FilterColor color={c} key={c} />
+                <FilterColor color={c} key={c} onClick={() => setColor(c)} />
               ))}
             </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
-              <FilterSize >
+              <FilterSize onChange={(e) => setColor(e.target.value)}>
                 {product.size?.map((s) => (
                   <FilterSizeOption key={s}>{s.toUpperCase()}</FilterSizeOption>
                 ))}
@@ -168,12 +179,12 @@ const Product = () => {
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
-              <Remove onClick={() => changeQuantity("decrease")}/>
+              <Remove onClick={() => changeQuantity("decrease")} />
               <Amount>{quantity}</Amount>
-              <Add onClick={() => changeQuantity("increase")}/>
+              <Add onClick={() => changeQuantity("increase")} />
             </AmountContainer>
 
-            <Button>ADD TO CART</Button>
+            <Button onClick={() => handleClick()}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>

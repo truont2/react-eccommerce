@@ -5,10 +5,11 @@ import Badge from "@mui/material/Badge";
 import Stack from "@mui/material/Stack";
 import MailIcon from "@mui/icons-material/Mail";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import Announcement from "./Announcement";
+// use redux
+import {useSelector} from 'react-redux'
 // create own styled components
 import {mobile} from '../responsive'
-
+import { Link } from "react-router-dom";
 const Container = styled.div`
   height: 60px;
   /* usual way of doing media query*/
@@ -83,6 +84,9 @@ const Input = styled.input`
 
 
 const Navbar = () => {
+
+  const quantity = useSelector(state=>state.cart.quantity);
+  console.log(quantity);
   return (
     <Container>
       <Wrapper>
@@ -97,13 +101,15 @@ const Navbar = () => {
           <Logo>TK.T</Logo>
         </Center>
         <Right>
-            <MenuItem>REGISTER</MenuItem>
+          <MenuItem>REGISTER</MenuItem>
           <MenuItem>SIGN IN</MenuItem>
+          <Link to="/cart">
           <MenuItem>
-            <Badge badgeContent={4} color="secondary">
+            <Badge badgeContent={quantity} color="secondary">
               <ShoppingCartOutlinedIcon />
             </Badge>
           </MenuItem>
+          </Link>
         </Right>
       </Wrapper>
     </Container>
